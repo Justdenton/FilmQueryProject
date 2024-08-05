@@ -1,7 +1,7 @@
 # FilmQueryProject
 
 ## Overview
-The Film Query Application project is a command line application that retrieves and displays film data (alternative to using MySQL). 
+The Film Query Application project is a command line application that retrieves and displays film data (alternative to using MySQL). When run, it allows a user to search for films by ID or keyword. The console will print the film's title, release year, rating, description, language, and cast.
 
 ## Technologies Used: 
 Eclipse IDE, Java, SQL, Java Database Connectivity (JDBC), git, GitHub. 

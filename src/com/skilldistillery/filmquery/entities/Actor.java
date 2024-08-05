@@ -6,6 +6,7 @@ public class Actor {
 	private int id;
 	private String firstName;
 	private String lastName;
+
 	// CONSTRUCTOR
 	public Actor() {
 

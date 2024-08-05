@@ -142,27 +142,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return films;
 	}
 
-	@Override
-	public String findLanguageById(int langId) {
-		String language = null;
-		String sql = "SELECT name FROM language WHERE id = ?";
-
-		try (Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-			stmt.setInt(1, langId);
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					language = rs.getString("name");
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return language;
-	}
-
 	public String getFilmDetailsById(int filmId) {
 		Film film = findFilmById(filmId);
 		if (film == null) {
@@ -183,17 +162,40 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return sb.toString();
 	}
 
-	private String formatFilmDetails(Film film) {
-		String language = findLanguageById(film.getLangID());
-		StringBuilder sb = new StringBuilder();
-		sb.append("Title: ").append(film.getTitle()).append("\n").append("Year: ").append(film.getReleaseYear())
-				.append("\n").append("Rating: ").append(film.getRating()).append("\n").append("Description: ")
-				.append(film.getDescription()).append("\n").append("Language: ").append(language).append("\n")
-				.append("Cast: ").append("\n");
-		for (Actor actor : film.getFilmCast()) {
-			sb.append("\t").append(actor.getFirstName()).append(" ").append(actor.getLastName()).append("\n");
-		}
-		return sb.toString();
-	}
+    @Override
+    public String findLanguageById(int langId) {
+        String language = null;
+        String sql = "SELECT name FROM language WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, langId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    language = rs.getString("name"); // HOW?????
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return language;
+    }
+
+    private String formatFilmDetails(Film film) {
+        String language = findLanguageById(film.getLangID());
+        StringBuilder sb = new StringBuilder();
+        sb.append("Title: ").append(film.getTitle()).append("\n")
+          .append("Year: ").append(film.getReleaseYear()).append("\n")
+          .append("Rating: ").append(film.getRating()).append("\n")
+          .append("Description: ").append(film.getDescription()).append("\n")
+          .append("Language: ").append(language != null ? language : "Unknown").append("\n")
+          .append("Cast: ").append("\n");
+        for (Actor actor : film.getFilmCast()) {
+            sb.append("\t").append(actor.getFirstName()).append(" ").append(actor.getLastName()).append("\n");
+        }
+        return sb.toString();
+    }
 
 }
