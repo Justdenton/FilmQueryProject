@@ -7,7 +7,7 @@ public class Film {
 	private int id;
 	private String title;
 	private String description;
-	private Integer releaseYear; 	// int cannot be null.
+	private Integer releaseYear;
 	private int langID;
 	private int rentDuration;
 	private double rentRate;
@@ -15,15 +15,17 @@ public class Film {
 	private double replaceCost;
 	private String rating;
 	private String specFeatures;
-	private List<Actor> filmCast; // #4
-	
+	private List<Actor> filmCast;
+
+	// CONSTRUCTOR
 	public Film() {
 		super();
 	}
-	
+
 	// CONSTRUCTOR
-	public Film(int id, String title, String description, int releaseYear, int langID, int rentDuration,
-			double rentRate, int length, double replaceCost, String rating, String specFeatures) {
+	public Film(int id, String title, String description, int releaseYear, 
+			int langID, int rentDuration, double rentRate, int length, 
+			double replaceCost, String rating, String specFeatures) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -37,40 +39,145 @@ public class Film {
 		this.rating = rating;
 		this.specFeatures = specFeatures;
 	}
+
 	// TO STRING
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", langID=" + langID + ", rentDuration=" + rentDuration + ", rentRate=" + rentRate + ", length="
-				+ length + ", replaceCost=" + replaceCost + ", rating=" + rating + ", specFeatures=" + specFeatures
-				+ "]";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Title: ").append(title).append("\n")
+			.append("Year: ").append(releaseYear).append("\n")
+			.append("Rating: ").append(rating).append("\n")
+			.append("Description: ").append(description).append("\n")
+			.append("Language ID: ").append(langID).append("\n").
+			append("Cast: ").append("\n");
+
+		if (filmCast != null && !filmCast.isEmpty()) {
+			for (Actor actor : filmCast) {
+				sb.append("\t").append(actor.getFirstName()).append(" ").append(actor.getLastName()).append("\n");
+			}
+		} else {
+			sb.append("\tNo cast information available.\n");
+		}
+
+		return sb.toString();
 	}
+
 	// HASH CODE
 	@Override
 	public int hashCode() {
 		return Objects.hash(description, id, langID, length, rating, releaseYear, rentDuration, rentRate, replaceCost,
 				specFeatures, title);
 	}
-	
+
 	// EQUALS
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
-		return Objects.equals(description, other.description) && id == other.id && langID == other.langID
-				&& length == other.length && Objects.equals(rating, other.rating) && releaseYear == other.releaseYear
-				&& rentDuration == other.rentDuration
-				&& Double.doubleToLongBits(rentRate) == Double.doubleToLongBits(other.rentRate)
-				&& Double.doubleToLongBits(replaceCost) == Double.doubleToLongBits(other.replaceCost)
+		return id == other.id && langID == other.langID && rentDuration == other.rentDuration
+				&& Double.compare(other.rentRate, rentRate) == 0 && Double.compare(other.replaceCost, replaceCost) == 0
+				&& Objects.equals(description, other.description) && Objects.equals(length, other.length)
+				&& Objects.equals(rating, other.rating) && Objects.equals(releaseYear, other.releaseYear)
 				&& Objects.equals(specFeatures, other.specFeatures) && Objects.equals(title, other.title);
 	}
-	
-	
-	
-	
+
+	// GET & SET
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getReleaseYear() {
+		return releaseYear;
+	}
+
+	public void setReleaseYear(Integer releaseYear) {
+		this.releaseYear = releaseYear;
+	}
+
+	public int getLangID() {
+		return langID;
+	}
+
+	public void setLangID(int langID) {
+		this.langID = langID;
+	}
+
+	public int getRentDuration() {
+		return rentDuration;
+	}
+
+	public void setRentDuration(int rentDuration) {
+		this.rentDuration = rentDuration;
+	}
+
+	public double getRentRate() {
+		return rentRate;
+	}
+
+	public void setRentRate(double rentRate) {
+		this.rentRate = rentRate;
+	}
+
+	public Integer getLength() {
+		return length;
+	}
+
+	public void setLength(Integer length) {
+		this.length = length;
+	}
+
+	public double getReplaceCost() {
+		return replaceCost;
+	}
+
+	public void setReplaceCost(double replaceCost) {
+		this.replaceCost = replaceCost;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+	public String getSpecFeatures() {
+		return specFeatures;
+	}
+
+	public void setSpecFeatures(String specFeatures) {
+		this.specFeatures = specFeatures;
+	}
+
+	public List<Actor> getFilmCast() {
+		return filmCast;
+	}
+
+	public void setFilmCast(List<Actor> filmCast) {
+		this.filmCast = filmCast;
+	}
 }
